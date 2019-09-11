@@ -8,13 +8,6 @@ use Novius\NovaVisualComposer\Helpers\Templates;
 
 class TemplateController extends Controller
 {
-    public function __construct(Request $request)
-    {
-        if (!$request->ajax()) {
-            return abort(405);
-        }
-    }
-
     public function templateCrud(Request $request)
     {
         $templateWanted = (string) $request->get('template', '');
