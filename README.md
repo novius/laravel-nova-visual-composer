@@ -14,7 +14,7 @@
 ## Installation
 
 ```sh
-composer require novius/laravel-backpack-visualcomposer:dev-master
+composer require novius/laravel-nova-visual-composer:dev-master
 ```
 
 ### Configuration
@@ -164,21 +164,21 @@ Create template views (CRUD + front views).
             </div>
             <div class="w-2/3">
                 <div class="form-group mb-2">
-                    <label class="block text-grey-darker text-sm font-bold mb-2" for="username">
+                    <label class="block text-grey-darker text-sm font-bold mb-2">
                         {{ trans('nova-visual-composer::templates.'.$templateName.'.crud_pre_title') }}
                     </label>
                     <input class="js-visual-field w-full form-control form-input form-input-bordered"
                            type="text"/>
                 </div>
                 <div class="form-group mb-2">
-                    <label class="block text-grey-darker text-sm font-bold mb-2" for="username">
+                    <label class="block text-grey-darker text-sm font-bold mb-2">
                         {{ trans('nova-visual-composer::templates.'.$templateName.'.crud_title') }}
                     </label>
                     <input class="js-visual-field w-full form-control form-input form-input-bordered"
                            type="text"/>
                 </div>
                 <div class="form-group mb-2">
-                    <label class="block text-grey-darker text-sm font-bold mb-2" for="username">
+                    <label class="block text-grey-darker text-sm font-bold mb-2">
                         {{ trans('nova-visual-composer::templates.'.$templateName.'.crud_text') }}
                     </label>
                     <textarea name="content"
