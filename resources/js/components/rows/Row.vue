@@ -211,13 +211,14 @@
             },
 
             initWysiwygFields() {
-                const wysiwygElements = this.$el.querySelector('textarea.js-wysiwyg');
+                const wysiwygElements = this.$el.querySelectorAll('textarea.js-wysiwyg');
                 if (!wysiwygElements) {
                     return;
                 }
 
-                ClassicEditor
-                    .create(wysiwygElements, {
+                wysiwygElements.forEach((wysiwyg) => {
+                    ClassicEditor
+                    .create(wysiwyg, {
                         toolbar: [
                             'heading',
                             '|',
@@ -241,12 +242,12 @@
                         }
                     })
                     .then(editor => {
-                        window.editor = editor;
                         editor.model.document.on('change:data', () => {
                             editor.updateSourceElement();
                             this.refreshValue();
                         });
                     });
+                });
             }
         },
 
