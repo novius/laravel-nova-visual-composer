@@ -23,6 +23,7 @@
             </label>
             <textarea name="content"
                       class="js-visual-field js-wysiwyg w-full form-control form-input-bordered py-2 h-20"></textarea>
+            <div class="js-quill-editor"></div>
         </div>
     </div>
 </div>
