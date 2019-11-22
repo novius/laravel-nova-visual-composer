@@ -19,11 +19,19 @@
         return;
       }
 
+      let rowsParam = JSON.parse(this.field.value);
+      rowsParam.forEach((row, index) => {
+        rowsParam[index] = {
+          template: row['template'],
+          content: '',
+        };
+      });
+
       Nova.request({
         url: '/nova-vendor/nova-visual-composer/rows-summary',
         method: 'GET',
         params: {
-          rows: this.field.value
+          rows: JSON.stringify(rowsParam),
         },
       }).then(({data}) => {
         if (data.error) {

@@ -21,5 +21,4 @@ return [
         \Novius\NovaVisualComposer\Templates\Separator::class,
         \Novius\NovaVisualComposer\Templates\Title::class,
     ],
-
 ];
