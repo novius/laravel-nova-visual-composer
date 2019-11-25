@@ -107,7 +107,6 @@
           this.template = data.templateHTML;
         }
       });
-
     },
 
     methods: {
@@ -264,23 +263,10 @@
           const quillEditor = parentNode.querySelector('.js-quill-editor');
           quillEditor.innerHTML = wysiwyg.value;
 
-          const toolbarOptions = [
-            ['bold', 'italic', 'underline', 'strike'], // toggled buttons
-            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-            [{ 'script': 'sub' }, { 'script': 'super' }], // superscript/subscript
-            [{ 'indent': '-1' }, { 'indent': '+1' }], // outdent/indent
-            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-            [{ 'color': [] }, { 'background': [] }], // dropdown with defaults from theme
-            [{ 'font': [] }],
-            [{ 'align': [] }],
-            ['clean'], // remove formatting button
-            ['image', 'video', 'link', 'html']
-          ];
-
           var quill = new Quill(quillEditor, {
             modules: {
               toolbar: {
-                container: toolbarOptions,
+                container: window.laraNovaVisualComposerConfig.quill.toolbarOptions,
                 handlers: {
                   'html': () => {
                     component.showHtmlModal(quillEditor, wysiwyg)
@@ -359,6 +345,5 @@
         });
       },
     }
-
   }
 </script>

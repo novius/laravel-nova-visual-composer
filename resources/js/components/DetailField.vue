@@ -13,7 +13,6 @@
     }),
 
     mounted() {
-
       if (!this.field.value) {
         this.template = '-';
         return;
@@ -23,7 +22,7 @@
       rowsParam.forEach((row, index) => {
         rowsParam[index] = {
           template: row['template'],
-          content: '',
+          content: '', // Prevent "entity too large" HTTP error
         };
       });
 
@@ -44,7 +43,6 @@
           }
         }
       });
-
     },
   }
 </script>
