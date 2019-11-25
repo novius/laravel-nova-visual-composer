@@ -324,12 +324,12 @@
     computed: {
       addRowBeforeVisible() {
         //return parseInt(this.index, 10) === 0;
-        return false;
+        return false; // @TODO
       },
 
       addRowAfterVisible() {
         //return (this.index + 1) < this.totalRows;
-        return false;
+        return false; // @TODO
       }
     },
 
