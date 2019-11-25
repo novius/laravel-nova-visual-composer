@@ -59,7 +59,7 @@
 
 <script>
   import draggable from 'vuedraggable'
-  import Row from './rows/Row.vue'
+  import Row from './Rows/Row.vue'
   import Vue from 'vue';
   import { FormField, HandlesValidationErrors } from 'laravel-nova'
 
