@@ -1,12 +1,1 @@
 @import "~quill/dist/quill.snow.css";
-
-// Change the dropdown label name
-.ql-picker.ql-size .ql-picker-label::before {
-  content: "Text size" !important;
-}
-
-// Change the dropdown item label name
-// @TODO: find a way to also change the font-size.
-.ql-picker.ql-size .ql-picker-item::before {
-  content: attr(data-value) !important;
-}

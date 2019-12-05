@@ -263,11 +263,6 @@
           const quillEditor = parentNode.querySelector('.js-quill-editor');
           quillEditor.innerHTML = wysiwyg.value;
 
-          // Register custom text size tool
-          const Size = Quill.import('attributors/style/size');
-          Size.whitelist = window.laraNovaVisualComposerSize;
-          Quill.register(Size, true);
-
           var quill = new Quill(quillEditor, {
             modules: {
               toolbar: {
