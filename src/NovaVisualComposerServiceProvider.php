@@ -35,7 +35,7 @@ class NovaVisualComposerServiceProvider extends ServiceProvider
         $this->publishes([__DIR__.'/../config' => config_path()], 'config');
 
         $this->publishes([
-            __DIR__.'/../resources/js/config.js' => resource_path('js/vendor/nova-visual-composer/config.js')
+            __DIR__.'/../resources/js/config.js' => resource_path('js/vendor/nova-visual-composer/config.js'),
         ], 'js');
 
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'nova-visual-composer');

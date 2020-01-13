@@ -28,7 +28,6 @@ class Templates
                 'name_trans' => $nameTranslated,
                 'description' => $templateClass::$description,
                 'classname' => $templateClass,
-
             ];
         }
 
