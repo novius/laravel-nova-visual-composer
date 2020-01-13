@@ -36,6 +36,7 @@ class TemplateController extends Controller
 
         return response()->json([
             'templateHTML' => (string) $templateClass::renderCrud(),
+            'rowName' => Templates::template($templateClass)['name_trans'],
             'error' => 0,
         ]);
     }
