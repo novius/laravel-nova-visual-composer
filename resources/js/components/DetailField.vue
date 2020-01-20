@@ -13,17 +13,24 @@
     }),
 
     mounted() {
-
       if (!this.field.value) {
         this.template = '-';
         return;
       }
 
+      let rowsParam = JSON.parse(this.field.value);
+      rowsParam.forEach((row, index) => {
+        rowsParam[index] = {
+          template: row['template'],
+          content: '', // Prevent "entity too large" HTTP error
+        };
+      });
+
       Nova.request({
         url: '/nova-vendor/nova-visual-composer/rows-summary',
         method: 'GET',
         params: {
-          rows: this.field.value
+          rows: JSON.stringify(rowsParam),
         },
       }).then(({data}) => {
         if (data.error) {
@@ -36,7 +43,6 @@
           }
         }
       });
-
     },
   }
 </script>

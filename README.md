@@ -25,6 +25,16 @@ Some options that you can override are available.
 php artisan vendor:publish --provider="Novius\NovaVisualComposer\NovaVisualComposerServiceProvider" --tag="config"
 ```
 
+**JS Configuration**
+
+Some options (like wysiwyg config) are configurable from JS config file. 
+
+You can override it with :
+
+```sh
+php artisan vendor:publish --provider="Novius\NovaVisualComposer\NovaVisualComposerServiceProvider" --tag="js"
+```
+
 ## Purge TMP uploaded files
 
 In your app/Console/Kernel.php file, you should register a daily job to purge any stale files :
