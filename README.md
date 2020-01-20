@@ -3,8 +3,6 @@
 [![Packagist Release](https://img.shields.io/packagist/v/novius/laravel-nova-visual-composer.svg?maxAge=1800&style=flat-square)](https://packagist.org/packages/novius/laravel-nova-visual-composer)
 [![Licence](https://img.shields.io/packagist/l/novius/laravel-nova-visual-composer.svg?maxAge=1800&style=flat-square)](https://github.com/novius/laravel-nova-visual-composer#licence)
 
-> **WARNING**: this package is currently in development.
-
 ## Requirements
 
 * PHP >= 7.1.3
