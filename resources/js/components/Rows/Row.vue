@@ -174,6 +174,11 @@
 
                 const content = JSON.parse(this.initialValue);
                 const fields = this.$el.querySelectorAll('.js-visual-field');
+
+                if (!fields.length) {
+                    return;
+                }
+
                 fields.forEach((field, index) => {
                     if (content[index]) {
                         if (field.classList.contains('js-image-uploader')) {
@@ -192,6 +197,11 @@
 
                 const content = JSON.parse(this.value);
                 const fields = this.$el.querySelectorAll('.js-visual-field');
+
+                if (!fields.length) {
+                    return;
+                }
+
                 fields.forEach((field, index) => {
                     if (content[index]) {
                         if (field.classList.contains('js-image-uploader')) {
@@ -347,13 +357,19 @@
             },
 
             getValue() {
+                let contents = [];
                 const row = this.$el;
+
                 if (!row) {
-                    return '';
+                    return JSON.stringify(contents);
                 }
 
-                let contents = [];
                 const fields = row.querySelectorAll('.js-visual-field');
+
+                if (!fields.length) {
+                    return JSON.stringify(contents);
+                }
+
                 fields.forEach((field) => {
                     if (field.classList.contains('js-image-uploader')) {
                         let images = [];
