@@ -3,8 +3,6 @@
 [![Packagist Release](https://img.shields.io/packagist/v/novius/laravel-nova-visual-composer.svg?maxAge=1800&style=flat-square)](https://packagist.org/packages/novius/laravel-nova-visual-composer)
 [![Licence](https://img.shields.io/packagist/l/novius/laravel-nova-visual-composer.svg?maxAge=1800&style=flat-square)](https://github.com/novius/laravel-nova-visual-composer#licence)
 
-> **WARNING**: this package is currently in development.
-
 ## Requirements
 
 * PHP >= 7.1.3
@@ -53,6 +51,12 @@ By default tmp file is stale considered after 24h. You can override this value i
 
 **Step 1**
 
+Create a long text column on your model's table.
+
+```php
+$table->longText('content')->nullable();
+```
+
 Configure your model by adding `object` to the desired column.
 
 ```php
@@ -86,6 +90,16 @@ class FooResource extends Resource
     }
 }
 
+```
+
+**Step 3**
+
+Display in your blade template.
+
+```php
+@foreach($item->content as $row)
+    {!! $row->template::renderFront($row->content) !!}
+@endforeach
 ```
 
 ## Create new row templates
