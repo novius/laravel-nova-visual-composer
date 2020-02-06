@@ -16,21 +16,21 @@
                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="12" height="28" viewBox="0 0 12 28">
                         <title>arrows-v</title>
                         <path
-                                d="M11 5c0 0.547-0.453 1-1 1h-2v16h2c0.547 0 1 0.453 1 1 0 0.266-0.109 0.516-0.297 0.703l-4 4c-0.187 0.187-0.438 0.297-0.703 0.297s-0.516-0.109-0.703-0.297l-4-4c-0.187-0.187-0.297-0.438-0.297-0.703 0-0.547 0.453-1 1-1h2v-16h-2c-0.547 0-1-0.453-1-1 0-0.266 0.109-0.516 0.297-0.703l4-4c0.187-0.187 0.438-0.297 0.703-0.297s0.516 0.109 0.703 0.297l4 4c0.187 0.187 0.297 0.438 0.297 0.703z"></path>
+                            d="M11 5c0 0.547-0.453 1-1 1h-2v16h2c0.547 0 1 0.453 1 1 0 0.266-0.109 0.516-0.297 0.703l-4 4c-0.187 0.187-0.438 0.297-0.703 0.297s-0.516-0.109-0.703-0.297l-4-4c-0.187-0.187-0.297-0.438-0.297-0.703 0-0.547 0.453-1 1-1h2v-16h-2c-0.547 0-1-0.453-1-1 0-0.266 0.109-0.516 0.297-0.703l4-4c0.187-0.187 0.438-0.297 0.703-0.297s0.516 0.109 0.703 0.297l4 4c0.187 0.187 0.297 0.438 0.297 0.703z"></path>
                     </svg>
                 </div>
 
                 <button
-                        class="row-item-delete"
-                        type="button"
-                        @click="deleteRow">
+                    class="row-item-delete"
+                    type="button"
+                    @click="deleteRow">
                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="22" height="28" viewBox="0 0 22 28">
                         <title>close</title>
                         <path
-                                d="M20.281 20.656c0 0.391-0.156 0.781-0.438 1.062l-2.125 2.125c-0.281 0.281-0.672 0.438-1.062 0.438s-0.781-0.156-1.062-0.438l-4.594-4.594-4.594 4.594c-0.281 0.281-0.672 0.438-1.062 0.438s-0.781-0.156-1.062-0.438l-2.125-2.125c-0.281-0.281-0.438-0.672-0.438-1.062s0.156-0.781 0.438-1.062l4.594-4.594-4.594-4.594c-0.281-0.281-0.438-0.672-0.438-1.062s0.156-0.781 0.438-1.062l2.125-2.125c0.281-0.281 0.672-0.438 1.062-0.438s0.781 0.156 1.062 0.438l4.594 4.594 4.594-4.594c0.281-0.281 0.672-0.438 1.062-0.438s0.781 0.156 1.062 0.438l2.125 2.125c0.281 0.281 0.438 0.672 0.438 1.062s-0.156 0.781-0.438 1.062l-4.594 4.594 4.594 4.594c0.281 0.281 0.438 0.672 0.438 1.062z"></path>
+                            d="M20.281 20.656c0 0.391-0.156 0.781-0.438 1.062l-2.125 2.125c-0.281 0.281-0.672 0.438-1.062 0.438s-0.781-0.156-1.062-0.438l-4.594-4.594-4.594 4.594c-0.281 0.281-0.672 0.438-1.062 0.438s-0.781-0.156-1.062-0.438l-2.125-2.125c-0.281-0.281-0.438-0.672-0.438-1.062s0.156-0.781 0.438-1.062l4.594-4.594-4.594-4.594c-0.281-0.281-0.438-0.672-0.438-1.062s0.156-0.781 0.438-1.062l2.125-2.125c0.281-0.281 0.672-0.438 1.062-0.438s0.781 0.156 1.062 0.438l4.594 4.594 4.594-4.594c0.281-0.281 0.672-0.438 1.062-0.438s0.781 0.156 1.062 0.438l2.125 2.125c0.281 0.281 0.438 0.672 0.438 1.062s-0.156 0.781-0.438 1.062l-4.594 4.594 4.594 4.594c0.281 0.281 0.438 0.672 0.438 1.062z"></path>
                     </svg>
                 </button>
-                <div class="row-display" v-html="template"></div>
+                <div class="row-display" ref="rowDynamicContent"></div>
             </div>
 
             <div class="text-center w-full" v-if="addRowAfterVisible">
@@ -45,11 +45,11 @@
 
         <portal to="modals" v-if="sourceModalOpened">
             <show-wysiwyg-source-modal
-                    ref="wysiwygModal"
-                    :htmlSource="htmlSourceModal"
-                    v-if="sourceModalOpened"
-                    @update="saveAndCloseSourceModal($event)"
-                    @close="closeSourceModal"
+                ref="wysiwygModal"
+                :htmlSource="htmlSourceModal"
+                v-if="sourceModalOpened"
+                @update="saveAndCloseSourceModal($event)"
+                @close="closeSourceModal"
             />
         </portal>
     </div>
@@ -71,34 +71,31 @@
     import FilePondPluginFileEncode from 'filepond-plugin-file-encode';
 
     FilePond.registerPlugin(
-            FilePondPluginFileEncode,
-            FilePondPluginFileValidateSize,
-            FilePondPluginImagePreview,
-            FilePondPluginFileValidateType,
+        FilePondPluginFileEncode,
+        FilePondPluginFileValidateSize,
+        FilePondPluginImagePreview,
+        FilePondPluginFileValidateType,
     );
 
     export default {
 
         props: [
+            'id',
             'type',
-            'index',
             'initialValue',
             'totalRows',
-            'position',
+            'positions',
         ],
 
         data: () => ({
-            id: null,
-            template: 'Loading ...',
-            value: '',
             sourceModalOpened: false,
             htmlSourceModal: '',
             quillEditorConcernedByModal: null,
+            value: '',
+            template: '',
         }),
 
         mounted() {
-            this.id = this._uid;
-
             Nova.request({
                 url: '/nova-vendor/nova-visual-composer/template-content',
                 method: 'GET',
@@ -111,13 +108,36 @@
                     this.$toasted.show(data.message, { type: 'error' });
                 } else {
                     this.template = data.templateHTML;
+                    this.$refs.rowDynamicContent.innerHTML = this.template;
+
+                    this.$nextTick(() => {
+                        this.fillInputs();
+                        this.initWysiwygFields();
+                        this.initImageUploadFields();
+                        this.bindEvents();
+                        this.value = this.getValue();
+                    });
+                }
+            });
+        },
+
+        updated() {
+            this.$nextTick(() => {
+                if (this.$refs.rowDynamicContent.innerHTML === '') {
+                    // Sometimes, rowDynamicContent is emptied by Vue.js (bug of vuedraggable ?) => we have to reset HTML content and re-bind events
+                    this.$refs.rowDynamicContent.innerHTML = this.template;
+
+                    this.fillInputsFromValue();
+                    this.initWysiwygFields();
+                    this.initImageUploadFields();
+                    this.bindEvents();
                 }
             });
         },
 
         methods: {
             deleteRow() {
-                this.$emit('delete-row', [this.index, this.id]);
+                this.$emit('delete-row', [this.id]);
             },
 
             bindEvents() {
@@ -140,37 +160,48 @@
             },
 
             refreshValue() {
-                const row = this.$el;
-                let contents = [];
-                const fields = row.querySelectorAll('.js-visual-field');
-                fields.forEach((field) => {
-                    if (field.classList.contains('js-image-uploader')) {
-                        let images = [];
-                        const inputFields = field.querySelectorAll('input[name=filepond]');
-                        if (inputFields.length) {
-                            inputFields.forEach((input) => {
-                                images.push(input.value);
-                            });
-                            contents.push(images);
-                        } else {
-                            contents.push([]);
-                        }
-                    } else {
-                        contents.push(field.value);
-                    }
-                });
+                this.value = this.getValue();
 
-                this.value = JSON.stringify(contents);
-                this.$emit('update-row', [this.index, this.value]);
+                this.$emit('update-row', [this.id, this.value]);
+
+                this.$forceUpdate();
             },
 
             fillInputs() {
-                if (!this.initialValue || typeof this.initialValue !== 'string') {
+                if (!this.$el || !this.initialValue || typeof this.initialValue !== 'string') {
                     return;
                 }
 
                 const content = JSON.parse(this.initialValue);
                 const fields = this.$el.querySelectorAll('.js-visual-field');
+
+                if (!fields.length) {
+                    return;
+                }
+
+                fields.forEach((field, index) => {
+                    if (content[index]) {
+                        if (field.classList.contains('js-image-uploader')) {
+                            field.setAttribute('data-value', content[index].join('|'));
+                        } else {
+                            field.value = content[index];
+                        }
+                    }
+                });
+            },
+
+            fillInputsFromValue() {
+                if (!this.$el || !this.value || typeof this.value !== 'string') {
+                    return;
+                }
+
+                const content = JSON.parse(this.value);
+                const fields = this.$el.querySelectorAll('.js-visual-field');
+
+                if (!fields.length) {
+                    return;
+                }
+
                 fields.forEach((field, index) => {
                     if (content[index]) {
                         if (field.classList.contains('js-image-uploader')) {
@@ -324,6 +355,42 @@
             addRowAfter() {
                 this.$emit('add-row-after', [this.position]);
             },
+
+            getValue() {
+                let contents = [];
+                const row = this.$el;
+
+                if (!row) {
+                    return JSON.stringify(contents);
+                }
+
+                const fields = row.querySelectorAll('.js-visual-field');
+
+                if (!fields.length) {
+                    return JSON.stringify(contents);
+                }
+
+                fields.forEach((field) => {
+                    if (field.classList.contains('js-image-uploader')) {
+                        let images = [];
+                        const inputFields = field.querySelectorAll('input[name=filepond]');
+                        if (inputFields.length) {
+                            inputFields.forEach((input) => {
+                                if (input.value !== '') {
+                                    images.push(input.value);
+                                }
+                            });
+                            contents.push(images);
+                        } else {
+                            contents.push([]);
+                        }
+                    } else {
+                        contents.push(field.value);
+                    }
+                });
+
+                return JSON.stringify(contents);
+            },
         },
 
         computed: {
@@ -333,19 +400,20 @@
 
             addRowAfterVisible() {
                 return (this.position + 1) < this.totalRows;
-            }
-        },
+            },
 
-        watch: {
-            template: function (val, oldVal) {
+            position() {
                 const component = this;
 
-                this.$nextTick(() => {
-                    component.fillInputs();
-                    component.initWysiwygFields();
-                    component.initImageUploadFields();
-                    component.bindEvents();
+                const index = this.positions.findIndex(function (value) {
+                    return component.id === value;
                 });
+
+                if (index === -1) {
+                    return this.totalRows;
+                }
+
+                return index;
             },
         },
     }
