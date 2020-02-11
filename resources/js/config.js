@@ -16,7 +16,7 @@ window.laraNovaVisualComposerConfig = {
       [{ indent: '-1' }, { indent: '+1' }],
       [{ header: [1, 2, 3, 4, 5, 6, false] }],
       [{ color: [] }, { background: [] }],
-      [{ size: window.laraNovaVisualComposerSize || ['14px', '16px', '18px', '21px'] }],
+      [{ size: window.laraNovaVisualComposerSize }],
       [{ font: [] }],
       [{ align: [] }],
       ['clean'],
