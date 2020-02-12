@@ -1,1 +1,1 @@
-<div class="block-separator"></div>
+<div class="vc-block vc-block-separator"></div>
