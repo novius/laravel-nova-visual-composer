@@ -65,9 +65,11 @@ trait HasImageField
             }
 
             $images = $content[$index];
-            foreach ($images as $imagePath) {
-                if (!empty($imagePath) && Storage::disk($disk)->exists($imagePath)) {
-                    Storage::disk($disk)->delete($imagePath);
+            if (is_array($images)) {
+                foreach ($images as $imagePath) {
+                    if (!empty($imagePath) && Storage::disk($disk)->exists($imagePath)) {
+                        Storage::disk($disk)->delete($imagePath);
+                    }
                 }
             }
         }
