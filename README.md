@@ -8,12 +8,17 @@
 * PHP >= 7.1.3
 * Laravel Framework >= 5.8
 * Nova >= 2.0
+* Imagick PHP extension or GD Library (for Intervention Image)
 
 ## Installation
 
 ```sh
 composer require novius/laravel-nova-visual-composer:dev-master
 ```
+
+Next, configure Intervention Image package :
+
+[Intervention Image configuration instructions](http://image.intervention.io/getting_started/installation#laravel)
 
 ### Configuration
 
