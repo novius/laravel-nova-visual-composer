@@ -22,9 +22,9 @@ return [
         \Novius\NovaVisualComposer\Templates\Title::class,
     ],
 
-    // Minimum time before purge filepond thumbs
+    // Filepond thumbs cache expiration (in seconds)
     'filepond_thumb_cache_duration' => (3600 * 24),
 
-    // Thumbs with in pixels
+    // Thumbs width (in pixels)
     'filepond_thumbs_width' => 150,
 ];
