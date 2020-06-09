@@ -21,4 +21,10 @@ return [
         \Novius\NovaVisualComposer\Templates\Separator::class,
         \Novius\NovaVisualComposer\Templates\Title::class,
     ],
+
+    // Filepond thumbs cache expiration (in seconds)
+    'filepond_thumb_cache_duration' => (3600 * 24),
+
+    // Thumbs width (in pixels)
+    'filepond_thumbs_width' => 150,
 ];

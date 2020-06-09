@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Storage;
 
 class UploadController extends Controller
 {
+    protected $allowedMime = ['image/jpeg', 'image/png'];
+
     protected $diskName;
 
     protected $tmpPath;
@@ -23,6 +25,10 @@ class UploadController extends Controller
         if (!$request->hasFile('filepond')) {
             return abort(405);
         }
+
+        $request->validate([
+            'filepond' => 'required|mimetypes:'.implode(',', $this->allowedMime),
+        ]);
 
         $tmpPath = Storage::disk($this->diskName)
             ->put($this->tmpPath, $request->file('filepond'));
@@ -44,9 +50,23 @@ class UploadController extends Controller
             abort(404);
         }
 
-        $filename = pathinfo($fileWanted, PATHINFO_FILENAME);
+        $fileMime = Storage::disk($this->diskName)->mimeType($fileWanted);
+        if (!in_array($fileMime, $this->allowedMime)) {
+            abort(404);
+        }
 
-        return Storage::disk($this->diskName)->download($fileWanted, $filename, [], 'inline');
+        $thumbsCacheDuration = config('nova-visual-composer.filepond_thumb_cache_duration', (3600 * 24));
+        $extension = pathinfo($fileWanted, PATHINFO_EXTENSION);
+        $imgEncoded = \Cache::remember('vc.upload_thumb.'.md5($fileWanted), $thumbsCacheDuration, function () use ($fileWanted, $extension) {
+            return (string) \Image::make(Storage::disk($this->diskName)
+                ->get($fileWanted))
+                ->resize(config('nova-visual-composer.filepond_thumbs_width', 150), null, function ($constraint) {
+                    $constraint->aspectRatio();
+                })
+                ->encode($extension);
+        });
+
+        return \Image::make($imgEncoded)->response($extension);
     }
 
     public function imageDelete(Request $request)
