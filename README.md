@@ -13,7 +13,7 @@
 ## Installation
 
 ```sh
-composer require novius/laravel-nova-visual-composer:dev-master
+composer require novius/laravel-nova-visual-composer
 ```
 
 Next, configure Intervention Image package :
