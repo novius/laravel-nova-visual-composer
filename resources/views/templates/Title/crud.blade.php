@@ -5,6 +5,7 @@
         </div>
         <div class="form-group w-1/2">
             <input class="js-visual-field w-full form-control form-input form-input-bordered"
+                   data-field-name="title"
                    type="text" />
         </div>
     </div>

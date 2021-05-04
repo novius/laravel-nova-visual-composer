@@ -2,7 +2,8 @@
     if (empty($content) || !is_array($content)) {
         return;
     }
-    $images = array_shift($content);
+
+    $images = (array) $content['images'] ?? [];
 @endphp
 <div class="block-images">
     @foreach($images as $image)

@@ -5,9 +5,9 @@
 
 ## Requirements
 
-* PHP >= 7.1.3
-* Laravel Framework >= 5.8
-* Nova >= 2.0
+* PHP >= 7.4
+* Laravel Framework >= 8.4
+* Nova >= 3.0
 * Imagick PHP extension or GD Library (for Intervention Image)
 
 ## Installation
@@ -140,7 +140,7 @@ class ImageText extends RowTemplateAbstract
 
     protected static function imageFieldsIndexes(): array
     {
-        return [0]; // Because image field is the first field that contains "js-visual-field" class of CRUD view
+        return ['image'];
     }
 }
 ```
@@ -175,6 +175,7 @@ Create template views (CRUD + front views).
 > TIPS :
 
 * Each HTML field that you want to save must contains `js-visual-field` class.
+* Each HTML field that you want to save must contains an unique name identifier `data-field-name="identifier"`.
 * If you want a wysiwyg add `js-wysiwyg` class to textarea field.
 * If you want an image upload field add `js-image-uploader` class to file field.
 * If you want a multiple images upload field add `js-image-uploader` class + `multiple` attribute to file field.
@@ -188,7 +189,9 @@ Create template views (CRUD + front views).
         <div class="flex">
             <div class="w-1/3 pr-3">
                 <div class="form-group">
-                    <input type="file" class="filepond js-visual-field js-image-uploader">
+                    <input type="file" 
+                           class="filepond js-visual-field js-image-uploader"
+                           data-field-name="image" />
                 </div>
             </div>
             <div class="w-2/3">
@@ -197,21 +200,24 @@ Create template views (CRUD + front views).
                         {{ trans('nova-visual-composer::templates.'.$templateName.'.crud_pre_title') }}
                     </label>
                     <input class="js-visual-field w-full form-control form-input form-input-bordered"
-                           type="text"/>
+                           type="text"
+                           data-field-name="pre_title" />
                 </div>
                 <div class="form-group mb-2">
                     <label class="block text-grey-darker text-sm font-bold mb-2">
                         {{ trans('nova-visual-composer::templates.'.$templateName.'.crud_title') }}
                     </label>
                     <input class="js-visual-field w-full form-control form-input form-input-bordered"
-                           type="text"/>
+                           type="text" 
+                           data-field-name="title"  />
                 </div>
                 <div class="form-group mb-2">
                     <label class="block text-grey-darker text-sm font-bold mb-2">
                         {{ trans('nova-visual-composer::templates.'.$templateName.'.crud_text') }}
                     </label>
-                    <textarea name="content"
-                              class="js-visual-field js-wysiwyg w-full form-control form-input-bordered py-2 h-20"></textarea>
+                    <textarea class="js-visual-field js-wysiwyg w-full form-control form-input-bordered py-2 h-20"
+                              data-field-name="html_content"
+                              ></textarea>
                 </div>
             </div>
         </div>
@@ -225,17 +231,14 @@ Create template views (CRUD + front views).
 ```blade
 @php
     if (empty($content) || !is_array($content)) {
-            return;
+        return;
     }
 
-    list(
-        $images,
-        $preTitle,
-        $title,
-        $htmlContent,
-    ) = $content;
-
-    $image = is_array($images) ? array_shift($images) : null;
+    $title = $content['title'] ?? '';
+    $preTitle = $content['pre_title'] ?? '';
+    $htmlContent = $content['html_content'] ?? '';
+    $images = (array) $content['image'] ?? [];
+    $image = array_shift($images);
 @endphp
 
 <div class="block-image-text">

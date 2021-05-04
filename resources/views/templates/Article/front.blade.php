@@ -1,13 +1,14 @@
 @php
     if (empty($content) || !is_array($content)) {
-            return;
+        return;
     }
 
-    list(
-        $title,
-        $subtitle,
-        $htmlContent,
-    ) = $content;
+    $title = $content['title'] ?? '';
+    $subtitle = $content['subtitle'] ?? '';
+    $htmlContent = $content['content'] ?? '';
+    $images = (array) $content['image'] ?? [];
+    $image = array_shift($images);
+    $imageAlt = $content['image_alt'] ?? '';
 @endphp
 
 <div class="block-article">
@@ -24,6 +25,12 @@
     @if (!empty($htmlContent))
         <div class="content">
             {!! $htmlContent !!}
+        </div>
+    @endif
+    @if (!empty($image))
+        <div class="image">
+            <img src="{{ asset('storage/'.$image) }}"
+                 alt="{{ $imageAlt }}" />
         </div>
     @endif
 </div>

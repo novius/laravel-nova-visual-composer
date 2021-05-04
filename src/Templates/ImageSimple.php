@@ -14,6 +14,6 @@ class ImageSimple extends RowTemplateAbstract
 
     protected static function imageFieldsIndexes(): array
     {
-        return [0];
+        return ['images'];
     }
 }

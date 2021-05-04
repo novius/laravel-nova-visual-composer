@@ -6,5 +6,5 @@
     $image = array_shift($images);
 @endphp
 <div class="block-image">
-        <img src="{{ asset('storage/'.$image) }}" />
+    <img src="{{ asset('storage/'.$image) }}" />
 </div>
