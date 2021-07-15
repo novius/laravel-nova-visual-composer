@@ -3,6 +3,7 @@
 namespace Novius\NovaVisualComposer;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Fields\Deletable;
 use Laravel\Nova\Fields\Field;
@@ -98,26 +99,27 @@ class NovaVisualComposer extends Field implements \Laravel\Nova\Contracts\Deleta
 
     protected function getPrunableFiles(Model $model, string $attribute, bool $original = false): array
     {
-        $rows = $model->{$attribute};
+        $rows = data_get($model, str_replace('->', '.', $attribute));
         if ($original) {
-            $rows = $model->getOriginal($attribute);
+            $originalAttributes = $model->getOriginal();
+            $rows = data_get($originalAttributes, str_replace('->', '.', $attribute));
+
             if (empty($rows)) {
                 return [];
             }
-            $rows = json_decode($rows);
         }
 
         $files = [];
         if (!empty($rows) && $model->exists) {
-
             foreach ($rows as $row) {
-                $rowContent = json_decode($row->content);
-                if (!is_array($rowContent) || empty($rowContent) || !class_exists($row->template)) {
+                $rowContent = json_decode(Arr::get($row, 'content'));
+                $rowTemplateClass = Arr::get($row, 'template');
+                if (!is_array($rowContent) || empty($rowContent) || !class_exists($rowTemplateClass)) {
                     continue;
                 }
-                if (in_array(HasPrunableFiles::class, class_uses(new $row->template))) {
-                    $rowTemplate = $row->template;
-                    $files = array_merge($files, $rowTemplate::prunableFiles($rowContent));
+
+                if (in_array(HasPrunableFiles::class, class_uses(new $rowTemplateClass))) {
+                    $files = array_merge($files, $rowTemplateClass::prunableFiles($rowContent));
                 }
             }
         }
@@ -132,11 +134,11 @@ class NovaVisualComposer extends Field implements \Laravel\Nova\Contracts\Deleta
         return json_encode($value ?? []);
     }
 
-    public function meta()
+    public function meta(): array
     {
         return array_merge($this->meta, [
             'templates' => Templates::templates()->toArray(),
-            'addRowButtonLabel' => 'Ajouter une ligne',
+            'addRowButtonLabel' => trans('nova-visual-composer::admin.add_row'),
         ]);
     }
 }

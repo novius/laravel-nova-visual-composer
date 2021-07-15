@@ -180,12 +180,22 @@
                 }
 
                 fields.forEach((field, index) => {
-                    if (content[index]) {
-                        if (field.classList.contains('js-image-uploader')) {
-                            field.setAttribute('data-value', content[index].join('|'));
-                        } else {
-                            field.value = content[index];
-                        }
+                    const fieldName = field.dataset.fieldName;
+                    if (! fieldName) {
+                        console.error('Row field error : data-field-name attribute is required.', field);
+                        return;
+                    }
+
+                    const contentIndex = _.findIndex(content, function(o) { return o.name === fieldName; });
+                    if (contentIndex === -1) {
+                        return;
+                    }
+
+                    const fieldContent = content[contentIndex]['content'];
+                    if (field.classList.contains('js-image-uploader')) {
+                        field.setAttribute('data-value', fieldContent.join('|'));
+                    } else {
+                        field.value = fieldContent;
                     }
                 });
             },
@@ -203,6 +213,12 @@
                 }
 
                 fields.forEach((field, index) => {
+                    const fieldName = field.dataset.fieldName;
+                    if (! fieldName) {
+                        console.error('Row field error : data-field-name attribute is required.', field);
+                        return;
+                    }
+
                     if (content[index]) {
                         if (field.classList.contains('js-image-uploader')) {
                             field.setAttribute('data-value', content[index].join('|'));
@@ -261,7 +277,11 @@
                         filePondConfig.files = files;
                     }
 
-                    FilePond.create(uploadElement, filePondConfig);
+                    const pond = FilePond.create(uploadElement, filePondConfig);
+                    const domElement = pond.element;
+                    if (uploadElement.dataset.fieldName) {
+                        domElement.dataset.fieldName = uploadElement.dataset.fieldName;
+                    }
                 });
 
                 document.addEventListener('FilePond:processfile', e => {
@@ -371,6 +391,17 @@
                 }
 
                 fields.forEach((field) => {
+                    const fieldName = field.dataset.fieldName;
+                    if (! fieldName) {
+                        console.error('Row field error : data-field-name attribute is required.', field);
+                        return;
+                    }
+
+                    const fieldData = {
+                        name: fieldName,
+                        content: '',
+                    };
+
                     if (field.classList.contains('js-image-uploader')) {
                         let images = [];
                         const inputFields = field.querySelectorAll('input[name=filepond]');
@@ -380,13 +411,15 @@
                                     images.push(input.value);
                                 }
                             });
-                            contents.push(images);
+                            fieldData.content = images;
                         } else {
-                            contents.push([]);
+                            fieldData.content = [];
                         }
                     } else {
-                        contents.push(field.value);
+                        fieldData.content = field.value;
                     }
+
+                    contents.push(fieldData);
                 });
 
                 return JSON.stringify(contents);

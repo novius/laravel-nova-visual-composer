@@ -45,9 +45,16 @@ abstract class RowTemplateAbstract
 
     public static function renderFront(string $content)
     {
+        $content = json_decode($content);
+        if (empty($content) || json_last_error() !== JSON_ERROR_NONE) {
+            $content = [];
+        }
+
         return view(
             'nova-visual-composer::templates.'.class_basename(get_called_class()).'.front',
-            ['content' => json_decode($content)]
+            [
+                'content' => collect($content)->pluck('content', 'name')->all(),
+            ]
         );
     }
 

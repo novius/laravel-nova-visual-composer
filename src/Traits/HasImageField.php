@@ -11,7 +11,7 @@ trait HasImageField
      * Get image fields indexes
      *
      * Example :
-     * return [0, 3];
+     * return ['image', 'banner'];
      *
      * @return array
      */
@@ -20,15 +20,20 @@ trait HasImageField
     public static function beforeSave($content)
     {
         if (!empty($content) && !empty(static::imageFieldsIndexes())) {
-            $tmpContent = json_decode($content);
 
-            foreach (static::imageFieldsIndexes() as $index) {
-                if (empty($tmpContent[$index])) {
-                    continue;
+            $tmpContent = json_decode($content);
+            if (empty($tmpContent) || json_last_error() !== JSON_ERROR_NONE) {
+                return null;
+            }
+
+            $content = collect($tmpContent)->map(function($field) {
+                $fieldName = $field->name ?? '';
+                if (empty($fieldName) || ! in_array($fieldName, static::imageFieldsIndexes())) {
+                    return $field;
                 }
 
                 $newImagesPath = [];
-                $images = $tmpContent[$index];
+                $images = $field->content ?? [];
                 foreach ($images as $imagePath) {
                     $disk = config('nova-visual-composer.upload_disk');
                     if (!empty($imagePath)
@@ -46,10 +51,11 @@ trait HasImageField
                     }
                 }
 
-                $tmpContent[$index] = $newImagesPath;
-            }
-
-            $content = json_encode($tmpContent);
+                return [
+                    'name' => $fieldName,
+                    'content' => $newImagesPath,
+                ];
+            })->toJson();
         }
 
         return $content;
@@ -85,18 +91,20 @@ trait HasImageField
     {
         $files = [];
         $disk = config('nova-visual-composer.upload_disk');
-        foreach (static::imageFieldsIndexes() as $index) {
-            if (empty($content[$index])) {
-                continue;
+
+        collect($content)->each(function($field) use ($disk, &$files) {
+            $fieldName = $field->name ?? '';
+            if (empty($fieldName) || ! in_array($fieldName, static::imageFieldsIndexes())) {
+                return;
             }
 
-            $images = $content[$index];
+            $images = (array) $field->content ?? [];
             foreach ($images as $imagePath) {
                 if (!empty($imagePath) && Storage::disk($disk)->exists($imagePath)) {
                     $files[] = $imagePath;
                 }
             }
-        }
+        });
 
         return $files;
     }

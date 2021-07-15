@@ -2,7 +2,8 @@
     if (empty($content) || !is_array($content)) {
         return;
     }
-    $title = array_shift($content);
+
+    $title = $content['title'] ?? '';
 @endphp
 @if (!empty($title))
     <div class="block-title">

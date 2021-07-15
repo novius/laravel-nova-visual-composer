@@ -6,6 +6,8 @@ return [
         'crud_title' => 'Title',
         'crud_subtitle' => 'Subtitle',
         'crud_text' => 'Text',
+        'image' => 'Image',
+        'image_alt' => 'Image ALT',
     ],
     'image-multiple' => [
         'name' => 'Images',

@@ -81,7 +81,8 @@ $finder = PhpCsFixer\Finder::create()
     ->ignoreDotFiles(true)
     ->in(__DIR__);
 
-return PhpCsFixer\Config::create()
-    ->setRules($rules)
+$config = new PhpCsFixer\Config();
+
+return $config->setRules($rules)
     ->setFinder($finder)
     ->setUsingCache(true);

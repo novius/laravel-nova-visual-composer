@@ -4,7 +4,10 @@
             {{ $templateDetails['name_trans'] }}
         </div>
         <div class="form-group w-1/2">
-            <input type="file" multiple class="filepond js-visual-field js-image-uploader">
+            <input type="file"
+                   multiple
+                   class="filepond js-visual-field js-image-uploader"
+                   data-field-name="images" />
         </div>
     </div>
 </div>
