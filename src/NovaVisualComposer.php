@@ -100,7 +100,7 @@ class NovaVisualComposer extends Field implements \Laravel\Nova\Contracts\Deleta
     {
         $rows = $model->{$attribute};
         if ($original) {
-            $rows = $model->getOriginal($attribute);
+            $rows = $model->getRawOriginal($attribute);
             if (empty($rows)) {
                 return [];
             }
