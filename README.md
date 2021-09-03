@@ -5,10 +5,12 @@
 
 ## Requirements
 
-* PHP >= 7.1.3
-* Laravel Framework >= 5.8
+* PHP >= 7.4
+* Laravel Framework >= 8.
 * Nova >= 2.0
 * Imagick PHP extension or GD Library (for Intervention Image)
+
+>NOTE: These instructions are for Laravel >= 8. If you are using prior version, please see the [previous version's docs](https://github.com/novius/laravel-nova-visual-composer/tree/2.x).
 
 ## Installation
 
