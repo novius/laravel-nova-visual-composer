@@ -14,6 +14,7 @@ return [
     'image-simple' => [
         'name' => 'Image',
         'crud_image' => 'Image',
+        'crud_image_alt' => 'Attribut Alt',
     ],
     'separator' => [
         'name' => 'Séparateur',

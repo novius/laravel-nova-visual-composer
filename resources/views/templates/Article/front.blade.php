@@ -10,7 +10,7 @@
     ) = $content;
 @endphp
 
-<div class="block-article">
+<article class="vc-block vc-block-article">
     @if (!empty($title))
         <h3 class="title">
             {{ $title }}
@@ -26,4 +26,4 @@
             {!! $htmlContent !!}
         </div>
     @endif
-</div>
+</article>

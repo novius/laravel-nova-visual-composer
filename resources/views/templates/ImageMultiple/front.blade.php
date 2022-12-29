@@ -4,7 +4,7 @@
     }
     $images = array_shift($content);
 @endphp
-<div class="block-images">
+<div class="vc-block vc-block-images">
     @foreach($images as $image)
         <img src="{{ asset('storage/'.$image) }}" />
     @endforeach

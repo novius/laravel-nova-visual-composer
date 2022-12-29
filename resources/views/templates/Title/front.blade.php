@@ -5,7 +5,7 @@
     $title = array_shift($content);
 @endphp
 @if (!empty($title))
-    <div class="block-title">
+    <div class="vc-block vc-block-title">
         <h3 class="title">
             {{ $title }}
         </h3>
